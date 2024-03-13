@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>View Songs</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f0f0;
+	margin: 250px;
+	margin-top: 0px;
+	padding: 20px;
+}
+
+.song-list {
+	list-style-type: none;
+	padding: 0;
+}
+
+.song-item {
+	margin-bottom: 20px;
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.song-title {
+	font-weight: bold;
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+.song-details {
+	font-size: 16px;
+	color: #555;
+	margin-top: 10px;
+}
+
+.audio-player {
+	margin-top: 15px;
+}
+
+audio {
+	width: 100%;
+}
+
+.back-button {
+	background-color: #333;
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.back-button:hover {
+	background-color: #222;
+}
+</style>
+</head>
+<body>
+	<h1>Songs</h1>
+	<button class="back-button" th:if="${role == 'admin'}"
+		onclick="window.location.href='/adminhome'">Back to Homepage</button>
+	<button class="back-button" th:if="${role == 'customer'}"
+		onclick="window.location.href='/customerhome'">Back to
+		Homepage</button>
+	<ul class="song-list">
+		<li th:each="s:${songs}" class="song-item">
+			<div class="song-title" th:text="${s.songTitle}"></div>
+			<div class="song-details">
+				<span><b>Artist:</b> <span th:text="${s.artist}"></span></span><br>
+				<span><b>Genre:</b> <span th:text="${s.genre}"></span></span><br>
+				<span><b>Year:</b> <span th:text="${s.releaseYear}"></span></span><br>
+			</div>
+			<div class="audio-player">
+				<audio controls>
+					<source th:src="${s.songLink}">
+				</audio>
+			</div>
+		</li>
+	</ul>
+</body>
+</html>

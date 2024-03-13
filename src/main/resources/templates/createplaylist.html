@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Playlist</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f0f0;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	text-align: center;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+input[type="text"], select, input[type="submit"] {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type="submit"] {
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #45a049;
+}
+
+.back-button {
+	background-color: #333;
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.back-button:hover {
+	background-color: #222;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Create Playlist</h1>
+		<form action="/create" method="post">
+			<label for="playlistName">Playlist Name:</label>
+			<input type="text" id="playlistName" name="playlistName" required>
+			<label for="description">Description:</label>
+			<input type="text" id="description" name="description" required>
+			<label>Select Songs:</label>
+			<br>
+			<div th:each="song : ${songs}">
+				<input type="checkbox" id="song-${song.id}" name="songs"
+					th:value="${song.id}">
+				<label th:text="${song.songTitle}"></label>
+				<br>
+			</div>
+			<button type="submit" class="back-button">Create Playlist</button>
+			<button class="back-button" th:if="${role == 'admin'}"
+				onclick="window.location.href='/adminhome'">Back to
+				Homepage</button>
+			<button class="back-button" th:if="${role == 'customer'}"
+				onclick="window.location.href='/customerhome'">Back to
+				Homepage</button>
+		</form>
+	</div>
+</body>
+</html>
